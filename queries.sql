@@ -16,4 +16,34 @@ SELECT * FROM animals WHERE name != 'Gabumon';
 
 SELECT * FROM animals WHERE weight_kg BETWEEN 10.4 AND 17.3;
 
+/*Transaction update one table column and rollback*/
+
+BEGIN;
+ALTER TABLE animals RENAME COLUMN species TO unspecified;
+ROLLBACK;
+
+/*Transaction update one table column and commit*/
+
+BEGIN;
+UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
+UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
+COMMIT;
+
+/*Transaction update of all records in a table and rollback*/
+
+BEGIN;
+DELETE FROM animals;
+ROLLBACK;
+
+/*Transaction update and delete with savepoint, rollback, and commit in a table*/
+
+BEGIN;
+DELETE FROM animals WHERE date_of_birth >= '01-01-2022';
+SAVEPOINT first_savepoint;
+UPDATE animals SET weight_kg = weight_kg * -1;
+ROLLBACK TO SAVEPOINT first_savepoint;
+UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
+COMMIT;
+
+
 
