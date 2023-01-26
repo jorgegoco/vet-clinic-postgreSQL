@@ -42,9 +42,9 @@ CREATE TABLE vets (
 );
 
 CREATE TABLE specializations (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     vet_id INT REFERENCES vets (id),
     species_id INT REFERENCES species (id),
-    PRIMARY KEY (vet_id, species_id)
 );
 
 CREATE TABLE visits (
