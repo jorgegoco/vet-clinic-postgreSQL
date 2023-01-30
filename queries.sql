@@ -158,3 +158,7 @@ FULL JOIN vets ON vets.id = visits.vet_id FULL JOIN specializations ON specializ
 
 SELECT name FROM species WHERE id = (SELECT animals.species_id FROM visits JOIN vets ON vets.id = visits.vet_id JOIN animals ON animals.id = visits.animals_id 
 WHERE vets.name = 'Maisy Smith' GROUP BY animals.species_id ORDER BY COUNT(animals.species_id) desc limit 1);
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
+EXPLAIN ANALYZE SELECT * FROM visits where vet_id = 2;
+EXPLAIN ANALYZE SELECT * FROM owners where email = 'owner_18327@mail.com';
