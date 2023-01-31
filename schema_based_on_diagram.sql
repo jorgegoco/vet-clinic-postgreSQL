@@ -46,6 +46,16 @@ CREATE TABLE invoice_items(
 );
 
 CREATE TABLE medical_histories_treatments(
-   treatments_id INT REFERENCES treatments(id),
-   medical_histories_id INT REFERENCES medical_histories(id),
+   treatments_id INT,
+   medical_histories_id INT,
+   PRIMARY KEY (treatments_id, medical_histories_id),
+   FOREIGN KEY (treatments_id) REFERENCES treatments(id),
+   FOREIGN KEY (medical_histories_id) REFERENCES medical_histories(id) 
 );
+
+CREATE INDEX patients_idx ON patients(name);
+CREATE INDEX medical_histories_idx ON medical_histories(patient_id);
+CREATE INDEX invoices_idx ON invoices(medical_history__id);
+CREATE INDEX treatments_idx ON treatments(name);
+CREATE INDEX ON medical_histories_treatments(treatments_id); 
+CREATE INDEX ON medical_histories_treatment(medical_histories_id);
